@@ -26,7 +26,7 @@ variables <- tribble(
   "GPDIC1",      "real_investment",      "log_level",
   "COMPRNFB",    "real_wage",            "log_level",
   "OPHNFB",      "labor_productivity",   "log_level",
-  "FEDFUNDS",    "federal_funds_rate",   "log_level",
+  "FEDFUNDS",    "federal_funds_rate",   "level",
   "CP",          "real_profits",         "log_level",
   "M2SL",        "m2_growth",            "growth_rate"
 )
@@ -45,6 +45,7 @@ transformed_data <- raw_data %>%
     transformed_value = case_when(
       transformation == "log_level"   ~ log(value),
       transformation == "growth_rate" ~ (value - lag(value))/lag(value),
+      transformation == "level" ~ value,
       TRUE ~ value
     )
   ) %>%
